@@ -33,6 +33,14 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
         controller: 'HomeCtrl',
         templateUrl: 'partials/home.html'
       })
+      .state('loginocp', {
+        url: '/loginocp',
+        templateUrl: 'partials/loginocp.html',
+        controller: 'LoginCtrl',
+        resolve: {
+          skipIfLoggedIn: skipIfLoggedIn
+        }
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'partials/login.html',
@@ -117,5 +125,17 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'toastr', 'ui.
       clientId: 'MTCEJ3NGW2PNNB31WOSBFDSAD4MTHYVAZ1UKIULXZ2CVFC2K',
       redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
       authorizationEndpoint: 'https://foursquare.com/oauth2/authenticate'
+    });
+
+    $authProvider.oauth2({
+      name: 'ocp',
+      url: '/oauth2/authenticate',
+      clientId: 'isp-console',
+      requiredUrlParams: ['state', 'scope'],
+      redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
+      authorizationEndpoint: 'https://ocp-lab-api.syssede.systest.sanpaoloimi.com:8443/oauth/authorize',
+      responseType: 'token',
+      scope: ['user:info'],
+      state: 'MTFhOGQxZGQtZTc1Ny00'
     });
   });
